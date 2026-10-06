@@ -73,12 +73,16 @@ export function validateMatrix(doc = matrix) {
       problems.push(`${where}.lighthouse must be a boolean`);
     }
     if (seenPaths.has(route.path)) {
-      problems.push(`${where}.path duplicates routes[${seenPaths.get(route.path)}] (${route.path})`);
+      problems.push(
+        `${where}.path duplicates routes[${seenPaths.get(route.path)}] (${route.path})`,
+      );
     } else {
       seenPaths.set(route.path, index);
     }
     if (seenNames.has(route.name)) {
-      problems.push(`${where}.name duplicates routes[${seenNames.get(route.name)}] (${route.name})`);
+      problems.push(
+        `${where}.name duplicates routes[${seenNames.get(route.name)}] (${route.name})`,
+      );
     } else {
       seenNames.set(route.name, index);
     }
@@ -127,9 +131,6 @@ function main(argv) {
 // Run only when invoked as a script (`node scripts/route-matrix.mjs`), not when
 // imported by the Playwright spec. realpathSync so a symlinked checkout still matches.
 const invokedPath = process.argv[1];
-if (
-  invokedPath &&
-  realpathSync(invokedPath) === realpathSync(fileURLToPath(import.meta.url))
-) {
+if (invokedPath && realpathSync(invokedPath) === realpathSync(fileURLToPath(import.meta.url))) {
   main(process.argv.slice(2));
 }
