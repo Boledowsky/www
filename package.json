@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/inline-css.js && node scripts/gen-blog-manifest.mjs && tsx scripts/og.ts && tsx scripts/sitemap.ts && node scripts/gen-rss.mjs",
+    "build": "tsx scripts/validate-content.ts && tsc -b && vite build && node scripts/inline-css.js && node scripts/gen-blog-manifest.mjs && tsx scripts/og.ts && tsx scripts/sitemap.ts && node scripts/gen-rss.mjs",
     "og:generate": "tsx scripts/og.ts",
     "generate:sitemap": "node scripts/gen-sitemap.mjs",
     "preview": "vite preview",
@@ -15,13 +15,14 @@
     "test:e2e": "playwright test",
     "test:a11y": "vitest run src/__tests__/a11y.test.tsx",
     "test:a11y:playwright": "playwright test tests/a11y",
-    "test:lighthouse": "node scripts/lighthouse-matrix.mjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint:i18n": "node scripts/lint-i18n.mjs",
     "generate:og": "node scripts/generate-og.mjs",
     "validate:jsonld": "tsx scripts/validate-jsonld.mjs",
-    "prepare": "husky"
+    "validate:content": "tsx scripts/validate-content.ts",
+    "prepare": "husky",
+    "test:lighthouse": "node scripts/lighthouse-matrix.mjs"
   },
   "dependencies": {
     "@stellar/stellar-sdk": "^13.3.0",
@@ -52,8 +53,7 @@
     "github-slugger": "^2.0.0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
-    "lighthouse": "^12.8.1",
-    "prettier": "^3.8.2",
+    "prettier": "3.8.2",
     "rehype-slug": "^6.0.0",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^5.2.0",
@@ -63,7 +63,8 @@
     "typescript": "^6.0.2",
     "vite": "^8.0.8",
     "vitest": "^4.1.9",
-    "vitest-axe": "^0.1.0"
+    "vitest-axe": "^0.1.0",
+    "lighthouse": "^12.8.1"
   },
   "packageManager": "pnpm@10.28.2"
 }
